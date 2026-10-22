@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>College Faculty Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <h1>Faculty<br>Office</h1>
+    <nav>
+      <button class="nav active" data-view="dashboard">Dashboard</button>
+      <button class="nav" data-view="faculty">Faculty</button>
+      <button class="nav" data-view="courses">Courses</button>
+      <button class="nav" data-view="leaves">Leave requests</button>
+      <button class="nav" data-view="ai">AI assistant</button>
+    </nav>
+  </aside>
+
+  <main>
+    <div id="toast" role="status"></div>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="view active">
+      <h2>Dashboard</h2>
+      <div class="stats" id="stats"></div>
+      <h3>Teaching load this week</h3>
+      <div id="loadBars" class="panel"></div>
+    </section>
+
+    <!-- Faculty -->
+    <section id="faculty" class="view">
+      <div class="head"><h2>Faculty</h2><button class="primary" id="addFacultyBtn">Add faculty</button></div>
+      <form id="facultyForm" class="panel form hidden">
+        <input type="hidden" id="f_id">
+        <label>Full name<input id="f_name" required></label>
+        <label>Email<input id="f_email" type="email" required></label>
+        <label>Phone<input id="f_phone"></label>
+        <label>Designation
+          <select id="f_designation"><option>Professor</option><option>Associate Professor</option><option>Assistant Professor</option><option>Lecturer</option></select>
+        </label>
+        <label>Department<select id="f_dept" required></select></label>
+        <label>Joining date<input id="f_join" type="date"></label>
+        <label>Max hours / week<input id="f_max" type="number" min="1" value="16"></label>
+        <div class="actions"><button class="primary" type="submit">Save faculty</button><button type="button" id="cancelFaculty">Cancel</button></div>
+      </form>
+      <div class="panel table-wrap"><table id="facultyTable"></table></div>
+    </section>
+
+    <!-- Courses -->
+    <section id="courses" class="view">
+      <div class="head"><h2>Courses</h2><button class="primary" id="addCourseBtn">Add course</button></div>
+      <form id="courseForm" class="panel form hidden">
+        <label>Course code<input id="c_code" required></label>
+        <label>Title<input id="c_title" required></label>
+        <label>Credits<input id="c_credits" type="number" min="1" value="3"></label>
+        <label>Hours / week<input id="c_hours" type="number" min="1" value="3"></label>
+        <label>Assign to<select id="c_faculty"></select></label>
+        <div class="actions"><button class="primary" type="submit">Save course</button><button type="button" id="cancelCourse">Cancel</button></div>
+      </form>
+      <div class="panel table-wrap"><table id="courseTable"></table></div>
+    </section>
+
+    <!-- Leaves -->
+    <section id="leaves" class="view">
+      <h2>Leave requests</h2>
+      <form id="leaveForm" class="panel form">
+        <label>Faculty<select id="l_faculty" required></select></label>
+        <label>From<input id="l_start" type="date" required></label>
+        <label>To<input id="l_end" type="date" required></label>
+        <label class="wide">Reason<input id="l_reason"></label>
+        <div class="actions"><button class="primary" type="submit">Submit request</button></div>
+      </form>
+      <div class="panel table-wrap"><table id="leaveTable"></table></div>
+    </section>
+
+    <!-- AI -->
+    <section id="ai" class="view">
+      <h2>AI assistant</h2>
+      <div class="ai-grid">
+        <div class="panel">
+          <h3>Single agent</h3>
+          <p class="muted">One assistant that picks database tools by itself to answer your question.</p>
+          <textarea id="singleQ" rows="3">Who is the most overloaded faculty member, and who has spare capacity?</textarea>
+          <button class="primary" id="singleBtn">Ask the agent</button>
+          <div id="singleOut" class="out"></div>
+        </div>
+        <div class="panel">
+          <h3>Multi-agent team</h3>
+          <p class="muted">A Workload agent and a Leave agent report to a Coordinator, who writes the plan.</p>
+          <textarea id="multiQ" rows="3">Plan next week: assign the unassigned courses and decide on pending leave requests.</textarea>
+          <button class="primary" id="multiBtn">Run the team</button>
+          <div id="multiOut" class="out"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
